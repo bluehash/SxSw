@@ -1,10 +1,17 @@
 //==============================================================================
 // Program:      DLP Communicator
 // Reference:    
+//
+// DLP Communicator
+// Launchpad v1.5 MSP430G2553
+// P2.2 : Trigger
+// P1.7 : SDA
+// P1.6 : SCL
+// Hardware Serial Pins @9600 N81
+// 
 //==============================================================================
-// Gerard_S/TI/SxSw Workshop
-// v0.1 - DLP Communicator
-// Serial parser by Pete Willard, modified by Gerard Sequeira[43oh]
+// By: Gerard S, 43oh.com
+// with minor edits by Kipp Bradford for use with Processing Image Capture program
 
 
 #include <Wire.h>
@@ -63,6 +70,7 @@ void setup()
     Serial.println("P1.7 : SDA");
     Serial.println("P1.6 : SCL");
     Serial.println("Hardware Serial Pins @9600 N81");
+    Serial.println("MSP430 Lightcrafter Driver Setup Complete");
 }
 //==============================================================================
  
@@ -87,6 +95,15 @@ void loop() {
         digitalWrite(TriggerPin, HIGH);
         delay(250);
         digitalWrite(TriggerPin, LOW);
+     }     else if ( strcmp( Command,"next") == 0 )
+     {
+        Serial.println("next pattern...");
+        // trigger the next pattern
+        digitalWrite(Led, LOW);
+        digitalWrite(TriggerPin, LOW);
+        //delay(1);
+        digitalWrite(TriggerPin, HIGH); 
+        digitalWrite(Led, HIGH);
      }
      // Note: Whe talking to the DLP, bit 7 of the first byte needs
      // to be 1. Eg: 0x13 for reset, becomes 0x93. This is not documented in the datasheet.
@@ -180,4 +197,3 @@ void loop() {
       }
      } 
  }
-
